@@ -1,9 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl"> <!-- Added dir="rtl" for better Arabic text rendering -->
+<html lang="ar" dir="rtl"> <!-- Added dir="rtl" for better Arabic text rendering -->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ahmed Elshamy - .NET Developer Portfolio</title>
+  <title>Ahmed Elshamy - .NET Developer Portfolio | مطور .NET</title>
+  <meta name="description" content="Ahmed Elshamy - .NET Developer specializing in web applications, competitive programming, and full-stack development. View my portfolio and projects." />
+  <meta name="keywords" content=".NET Developer, C#, ASP.NET, Web Development, Portfolio, Ahmed Elshamy" />
+  <meta name="author" content="Ahmed Elshamy" />
+  <meta property="og:title" content="Ahmed Elshamy - .NET Developer Portfolio" />
+  <meta property="og:description" content="Passionate .NET Developer with expertise in building modern, scalable web applications" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://ahmed-elshamy.github.io/portfolio" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Roboto:wght@400;700&display=swap" as="style">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ahmed Elshamy",
+    "jobTitle": ".NET Developer",
+    "description": "Passionate .NET Developer with expertise in building modern, scalable web applications",
+    "url": "https://ahmed-elshamy.github.io/portfolio",
+    "sameAs": [
+      "https://github.com/Ahmed-Elsahmy",
+      "https://www.linkedin.com/in/ahmed-elshamy-6b2785289"
+    ],
+    "knowsAbout": [
+      "C#",
+      ".NET Framework",
+      "ASP.NET MVC",
+      "Entity Framework",
+      "SQL Server",
+      "Web Development",
+      "Competitive Programming"
+    ],
+    "alumniOf": "Port Said University",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Damietta",
+      "addressCountry": "Egypt"
+    }
+  }
+  </script>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -12,78 +56,160 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   
-  <style>
-    html { scroll-behavior: smooth; }
-    body { background: black; color: white; font-family: 'Roboto', 'Segoe UI', sans-serif; overflow-x: hidden; }
-    h1, h2, h3, h4, p, a, li { font-family: 'Cairo', 'Roboto', sans-serif; }
-    canvas#matrix { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-    .card-hover { transition: all 0.3s ease; }
-    .card-hover:hover {
-      transform: scale(1.05);
-      box-shadow: 0px 0px 25px rgba(0, 255, 255, 0.6);
-      border-color: rgba(0, 255, 255, 0.8);
-    }
-  </style>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-black text-white">
 
-  <!-- Background Matrix -->
-  <canvas id="matrix"></canvas>
+  <!-- Skip to content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="fixed inset-0 bg-black z-50 flex items-center justify-center">
+    <div class="text-center">
+      <!-- Logo/Name -->
+      <div class="mb-8">
+        <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text mb-4">
+          Ahmed Elshamy
+        </h1>
+        <p class="text-gray-400 text-lg">.NET Developer</p>
+      </div>
+      
+      <!-- Loading Animation -->
+      <div class="relative mb-8">
+        <div class="w-20 h-20 mx-auto border-4 border-gray-700 border-t-cyan-400 rounded-full animate-spin"></div>
+        <div class="absolute inset-0 w-20 h-20 mx-auto border-4 border-transparent border-r-blue-500 rounded-full animate-spin" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
+      </div>
+      
+      <!-- Progress Bar -->
+      <div class="w-64 h-1 bg-gray-700 rounded-full mx-auto mb-4 overflow-hidden">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+      
+      <!-- Loading Text -->
+      <div class="space-y-2">
+        <p id="loading-text" class="text-cyan-400 font-medium">Loading...</p>
+        <p class="text-gray-500 text-sm">Preparing amazing experience</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Particles -->
+  <canvas id="particles-canvas"></canvas>
 
   <!-- Navbar -->
   <nav class="fixed top-0 left-0 w-full bg-black/70 backdrop-blur-md shadow-lg shadow-black/30 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex-shrink-0">
-          <a href="#" class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">Ahmed Elshamy</a>
+          <a href="#" class="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">Ahmed Elshamy</a>
         </div>
+        <!-- Mobile menu button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none focus:text-white">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+        <!-- Desktop menu -->
         <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            <a href="#about" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
-            <a href="#skills" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Skills</a>
-            <a href="#experience" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Experience</a>
-            <a href="#projects" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Projects</a>
-            <a href="#contact" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+          <div class="ml-10 flex items-baseline space-x-4 rtl:space-x-reverse">
+            <a href="#about" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+            <a href="#skills" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Skills</a>
+            <a href="#tools" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Tools</a>
+            <a href="#experience" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Experience</a>
+            <a href="#projects" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Projects</a>
+            <a href="#contact" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
           </div>
+        </div>
+      </div>
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="md:hidden hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/90 backdrop-blur-md rounded-lg mt-2">
+          <a href="#about" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors">About</a>
+          <a href="#skills" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors">Skills</a>
+          <a href="#tools" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors">Tools</a>
+          <a href="#experience" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors">Experience</a>
+          <a href="#projects" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors">Projects</a>
+          <a href="#contact" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors">Contact</a>
         </div>
       </div>
     </div>
   </nav>
 
+  <!-- Main Content -->
+  <main id="main-content">
   <!-- Hero Section -->
-  <section class="h-screen flex flex-col justify-center items-center text-center px-6">
-    <img src="Images/profile-photo..jpg" alt="Profile Photo" class="w-40 h-40 rounded-full border-4 border-cyan-400 shadow-lg mb-6" data-aos="zoom-in">
-    <h1 class="text-4xl md:text-6xl font-bold text-cyan-400 mb-4" data-aos="fade-down" data-aos-delay="200">Ahmed Elshamy</h1>
-    <h2 class="text-xl md:text-2xl text-gray-300 mb-6" data-aos="fade-down" data-aos-delay="400">
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-20">
+    <img src="Images/profile-photo..jpg" alt="Ahmed Elshamy Profile Photo" class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-cyan-400 shadow-lg mb-6 object-cover" data-aos="zoom-in">
+    <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold text-cyan-400 mb-4 leading-tight" data-aos="fade-down" data-aos-delay="200">Ahmed Elshamy</h1>
+    <h2 class="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 min-h-[2rem]" data-aos="fade-down" data-aos-delay="400">
       <span id="typing" class="font-mono"></span>
     </h2>
-    <p class="max-w-2xl text-gray-400" data-aos="fade-up" data-aos-delay="600">I’m a passionate .NET Developer specialized in building modern, scalable, and secure web applications.</p>
+    <p class="max-w-2xl text-gray-400 text-sm sm:text-base leading-relaxed" data-aos="fade-up" data-aos-delay="600">I'm a passionate .NET Developer specialized in building modern, scalable, and secure web applications.</p>
+    <!-- CTA Buttons -->
+    <div class="mt-8 flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="800">
+      <a href="#projects" class="bg-cyan-500 text-black font-semibold py-3 px-8 rounded-lg hover:bg-cyan-400 transition-colors transform hover:scale-105">View My Work</a>
+      <a href="#contact" class="border border-cyan-400 text-cyan-400 font-semibold py-3 px-8 rounded-lg hover:bg-cyan-400 hover:text-black transition-colors transform hover:scale-105">Get In Touch</a>
+    </div>
   </section>
 
   <!-- About -->
-  <section id="about" class="py-24 max-w-4xl mx-auto text-center">
-    <h2 class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text" data-aos="fade-up">About Me</h2>
-    <p class="text-gray-300 leading-relaxed px-6" data-aos="fade-up" data-aos-delay="100">
-      I am <span class="text-cyan-400 font-semibold">Ahmed Elshamy</span>, a dedicated <span class="text-cyan-400">.NET Developer</span> with a strong foundation in backend development and competitive programming. I enjoy solving complex problems, optimizing performance, and delivering clean, scalable solutions, demonstrated through full-stack web applications and participation in contests like ECPC.
-    </p>
+  <section id="about" class="py-16 sm:py-24 max-w-4xl mx-auto text-center px-4 sm:px-6">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text" data-aos="fade-up">About Me</h2>
+    <div class="grid md:grid-cols-2 gap-8 items-center" data-aos="fade-up" data-aos-delay="100">
+      <div class="text-right">
+        <p class="text-gray-300 leading-relaxed mb-6">
+          I am <span class="text-cyan-400 font-semibold">Ahmed Elshamy</span>, a dedicated <span class="text-cyan-400">.NET Developer</span> with a strong foundation in backend development and competitive programming. I enjoy solving complex problems, optimizing performance, and delivering clean, scalable solutions.
+        </p>
+        <p class="text-gray-300 leading-relaxed mb-6">
+          My journey in programming started with competitive programming contests like ECPC and ICPC, which sharpened my problem-solving skills and algorithmic thinking. This foundation has been crucial in my development as a full-stack developer.
+        </p>
+      </div>
+      <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700" data-aos="fade-left" data-aos-delay="200">
+        <h3 class="text-xl font-semibold text-cyan-400 mb-4">Quick Facts</h3>
+        <ul class="space-y-2 text-gray-300 text-right">
+          <li><i class="fas fa-code text-cyan-400 mr-2 rtl:mr-0 rtl:ml-2"></i>3+ years programming experience</li>
+          <li><i class="fas fa-trophy text-cyan-400 mr-2 rtl:mr-0 rtl:ml-2"></i>Competitive programming participant</li>
+          <li><i class="fas fa-graduation-cap text-cyan-400 mr-2 rtl:mr-0 rtl:ml-2"></i>Management Technology student</li>
+          <li><i class="fas fa-globe text-cyan-400 mr-2 rtl:mr-0 rtl:ml-2"></i>Full-stack web developer</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <!-- Skills -->
-  <section id="skills" class="py-24">
-    <h2 class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text" data-aos="fade-up">Skills</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto px-6">
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up"><i class="fas fa-code text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">C# & .NET</p></div>
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="50"><i class="fas fa-project-diagram text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">OOP & Data Structures</p></div>
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="100"><i class="fas fa-database text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">SQL & EF Core</p></div>
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="150"><i class="fas fa-brain text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">Problem Solving</p></div>
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="200"><i class="fas fa-cubes text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">C++ Programming</p></div>
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="250"><i class="fas fa-users text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">Teamwork</p></div>
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="300"><i class="fas fa-comments text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">Communication</p></div>
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="350"><i class="fas fa-clock text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">Time Management</p></div>
-                <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="50"><i class="fas fa-server text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">Web API Development</p></div>
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="150"><i class="fab fa-html5 text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">HTML/CSS/Bootstrap</p></div>
-        <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="300"><i class="fas fa-search-dollar text-4xl text-cyan-400 mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white">SEO</p></div>
+  <section id="skills" class="py-16 sm:py-24">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text" data-aos="fade-up">Skills</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up"><i class="fas fa-code text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">C# & .NET</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="50"><i class="fas fa-project-diagram text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">OOP & Data Structures</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="100"><i class="fas fa-database text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">SQL & EF Core</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="150"><i class="fas fa-brain text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Problem Solving</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="200"><i class="fas fa-cubes text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">C++ Programming</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="250"><i class="fas fa-users text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Teamwork</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="300"><i class="fas fa-comments text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Communication</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="350"><i class="fas fa-clock text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Time Management</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="400"><i class="fas fa-server text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Web API Development</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="450"><i class="fab fa-html5 text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">HTML/CSS/Bootstrap</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="500"><i class="fas fa-search-dollar text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">SEO</p></div>
 
+    </div>
+  </section>
+
+  <!-- Tools -->
+  <section id="tools" class="py-16 sm:py-24">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text" data-aos="fade-up">Tools & Technologies</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up"><i class="fas fa-code text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Visual Studio</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="50"><i class="fab fa-git-alt text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Git & GitHub</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="100"><i class="fas fa-database text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">SQL Server</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="150"><i class="fas fa-terminal text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Command Line</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="200"><i class="fas fa-code-branch text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Postman</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="250"><i class="fas fa-cube text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Code Blocks</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="300"><i class="fas fa-paint-brush text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Canva</p></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm p-3 sm:p-6 rounded-xl border border-gray-700 text-center card-hover group" data-aos="fade-up" data-aos-delay="350"><i class="fas fa-spider text-2xl sm:text-4xl text-cyan-400 mb-2 sm:mb-3 transition-transform duration-300 group-hover:-translate-y-2"></i><p class="text-white text-xs sm:text-sm">Screaming Frog</p></div>
     </div>
   </section>
 
@@ -91,8 +217,8 @@
   <section id="experience" class="py-24">
     <h2 class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text" data-aos="fade-up">Experience</h2>
     <div class="max-w-4xl mx-auto space-y-8 px-6">
-      <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 card-hover" data-aos="fade-left"><h3 class="text-xl font-semibold text-white mb-2"><i class="fas fa-briefcase text-cyan-400 mr-2"></i>  SEO & Web Developer - Smarketing</h3><p class="text-gray-400 mb-3"> Agu 2025 - Present New Damietta | On-site</p><ul class="list-disc pl-6 text-gray-300"><li>Developed SEO strategies and built backlinks.</li><li>Managed Google Business Profile for clients.</li><li>Built and deployed complete websites.</li></ul></div>
-      <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 card-hover" data-aos="fade-right"><h3 class="text-xl font-semibold text-white mb-2"><i class="fas fa-briefcase text-cyan-400 mr-2"></i> Data Entry & Moderator - Issa Mall</h3><p class="text-gray-400 mb-3">Jan 2024 - Agu 2025 | On-site</p><ul class="list-disc pl-6 text-gray-300"><li>Managed product categorization and inventory system.</li><li>Handled company’s social media pages.</li></ul></div>
+      <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 card-hover" data-aos="fade-left"><h3 class="text-xl font-semibold text-white mb-2"><i class="fas fa-briefcase text-cyan-400 mr-2 rtl:mr-0 rtl:ml-2"></i>  SEO & Web Developer - Smarketing</h3><p class="text-gray-400 mb-3"> Agu 2025 - Present New Damietta | On-site</p><ul class="list-disc pl-6 text-gray-300"><li>Developed SEO strategies and built backlinks.</li><li>Managed Google Business Profile for clients.</li><li>Built and deployed complete websites.</li></ul></div>
+      <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 card-hover" data-aos="fade-right"><h3 class="text-xl font-semibold text-white mb-2"><i class="fas fa-briefcase text-cyan-400 mr-2 rtl:mr-0 rtl:ml-2"></i> Data Entry & Moderator - Issa Mall</h3><p class="text-gray-400 mb-3">Jan 2024 - Agu 2025 | On-site</p><ul class="list-disc pl-6 text-gray-300"><li>Managed product categorization and inventory system.</li><li>Handled company’s social media pages.</li></ul></div>
     </div>
   </section>
   
@@ -101,9 +227,9 @@
     <h2 class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text" data-aos="fade-up"> Education</h2>
     <div class="max-w-4xl mx-auto px-6">
       <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 card-hover" data-aos="zoom-in-up">
-        <h3 class="text-xl font-semibold text-white mb-2"><i class="fas fa-graduation-cap text-cyan-400 mr-2"></i> Bachelor of Management Technology</h3>
+        <h3 class="text-xl font-semibold text-white mb-2"><i class="fas fa-graduation-cap text-cyan-400 mr-2 rtl:mr-0 rtl:ml-2"></i> Bachelor of Management Technology</h3>
         <p class="text-gray-400 mb-3">Port Said University | Oct 2022 – Present</p>
-        <ul class="list-disc pl-6 text-gray-300">
+        <ul class="list-disc pl-6 text-gray-300 rtl:pl-0 rtl:pr-6">
           <li>Focused on Information Systems, and .NET development.</li>
           <li>Studied Data Structures, OOP, and Database Systems.</li>
           <li class="font-semibold text-cyan-300">Participated in competitive programming contests (ECPC, ICPC).</li>
@@ -125,7 +251,7 @@
         <div class="text-gray-400 flex-grow mb-4 text-right">
           <p class="mb-3">أول مشروع Full-Stack متكامل لي. وهو عبارة عن متجر أثاث متعدد البائعين (Multi-Vendor) يربط بين العملاء وأصحاب المعارض.</p>
           <p class="font-semibold text-gray-200 mb-2">أبرز المميزات:</p>
-          <ul class="list-disc pr-5 text-gray-400">
+          <ul class="list-disc pr-5 text-gray-400 rtl:pr-0 rtl:pl-5">
             <li>أنظمة منفصلة للبائعين (Vendors) والعملاء (Customers).</li>
             <li>إشعارات تلقائية بالبريد الإلكتروني عند إضافة منتجات جديدة.</li>
             <li>مهمة خلفية (Background Job) لحذف الطلبات غير المؤكدة.</li>
@@ -144,7 +270,7 @@
         <div class="text-gray-400 flex-grow mb-4 text-right">
           <p class="mb-3">تطبيق ويب لحجز تذاكر السينما باستخدام ASP.NET Core MVC.</p>
           <p class="font-semibold text-gray-200 mb-2">أبرز المميزات:</p>
-          <ul class="list-disc pr-5 text-gray-400">
+          <ul class="list-disc pr-5 text-gray-400 rtl:pr-0 rtl:pl-5">
             <li>لوحة تحكم (Admin Panel) لإدارة الأفلام.</li>
             <li>نظام إضافة للسلة وحجز تذاكر.</li>
             <li>نظام صلاحيات (Authentication & Authorization).</li>
@@ -162,7 +288,7 @@
          <div class="text-gray-400 flex-grow mb-4 text-right">
           <p class="mb-3">تطور لمشروع Cozy Corner مع تحسينات في الواجهة الخلفية وتطبيق مبادئ الـ Clean Architecture.</p>
           <p class="font-semibold text-gray-200 mb-2">أبرز التحسينات:</p>
-          <ul class="list-disc pr-5 text-gray-400">
+          <ul class="list-disc pr-5 text-gray-400 rtl:pr-0 rtl:pl-5">
             <li>إدارة ديناميكية لحالة الطلبات عبر AJAX.</li>
             <li>فصل الاهتمامات باستخدام Repository & Service Layers.</li>
             <li>تحسينات في الـ Validation وتجربة المستخدم.</li>
@@ -180,7 +306,7 @@
          <div class="text-gray-400 flex-grow mb-4 text-right">
           <p class="mb-3">تطبيق شخصي لتنظيم المصادر والروابط الهامة.</p>
           <p class="font-semibold text-gray-200 mb-2">أبرز المميزات:</p>
-          <ul class="list-disc pr-5 text-gray-400">
+          <ul class="list-disc pr-5 text-gray-400 rtl:pr-0 rtl:pl-5">
              <li>إدارة الملاحظات (CRUD Operations).</li>
              <li>نظام تصنيفات (Categories) مرن.</li>
              <li>إمكانية البحث السريع والفعّال.</li>
@@ -206,7 +332,7 @@
 - Visual C# (54 hours)
 - Asp.Net MVC (30 hours)
 - EF & Linq (12 hours)</p>
-            <a href="https://www.linkedin.com/posts/ahmed-elshamy-6b2785289_exited-news-im-thrilled-to-share-activity-7249291298862514177-cPJT/" target="_blank" class="mt-4 text-cyan-400 hover:text-cyan-200 font-semibold">View Announcement <i class="fas fa-external-link-alt ml-1"></i></a>
+            <a href="https://www.linkedin.com/posts/ahmed-elshamy-6b2785289_exited-news-im-thrilled-to-share-activity-7249291298862514177-cPJT/" target="_blank" class="mt-4 text-cyan-400 hover:text-cyan-200 font-semibold">View Announcement <i class="fas fa-external-link-alt ml-1 rtl:ml-0 rtl:mr-1"></i></a>
         </div>
 
         <!-- Competitive Programming Card -->
@@ -214,7 +340,7 @@
             <i class="fas fa-trophy text-4xl text-yellow-400 mb-3"></i>
             <h3 class="text-xl font-semibold text-white mb-2">Competitive Programming</h3>
             <p class="text-gray-400 flex-grow">Actively participated in prestigious contests like the Egyptian Collegiate Programming Contest (ECPC) and IEEE programming competitions.</p>
-            <a href="https://www.linkedin.com/posts/ahmed-elshamy-6b2785289_im-thrilled-to-share-my-first-participation-activity-7223796015886172160-Rhky/" target="_blank" class="mt-4 text-cyan-400 hover:text-cyan-200 font-semibold">View Post <i class="fas fa-external-link-alt ml-1"></i></a>
+            <a href="https://www.linkedin.com/posts/ahmed-elshamy-6b2785289_im-thrilled-to-share-my-first-participation-activity-7223796015886172160-Rhky/" target="_blank" class="mt-4 text-cyan-400 hover:text-cyan-200 font-semibold">View Post <i class="fas fa-external-link-alt ml-1 rtl:ml-0 rtl:mr-1"></i></a>
         </div>
     </div>
   </section>
@@ -235,32 +361,146 @@
     <!-- Contact form code remains the same -->
         <h2 class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text" data-aos="fade-up">Contact</h2>
     <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 px-6">
-      <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 card-hover" data-aos="fade-right">
-        <h3 class="text-xl font-semibold text-white mb-4">Get in Touch</h3>
-        <p class="text-gray-400 mb-2"><i class="fas fa-envelope text-cyan-400 mr-2"></i> ae0891821@gmail.com</p>
-        <p class="text-gray-400 mb-2"><i class="fas fa-phone text-cyan-400 mr-2"></i> 01004542726</p>
-        <p class="text-gray-400 mb-2"><i class="fas fa-map-marker-alt text-cyan-400 mr-2"></i> Damietta, Egypt</p>
-        <p class="text-gray-400 mb-2"><i class="fab fa-github text-cyan-400 mr-2"></i><a href="https://github.com/Ahmed-Elsahmy" target="_blank" class="hover:text-cyan-400">github.com/Ahmed-Elsahmy</a></p>
-        <p class="text-gray-400"><i class="fab fa-linkedin text-cyan-400 mr-2"></i><a href="https://www.linkedin.com/in/ahmed-elshamy-6b2785289" target="_blank" class="hover:text-cyan-400">linkedin.com/in/ahmed-elshamy</a></p>
+      <div class="bg-gray-900/50 backdrop-blur-sm p-8 rounded-xl border border-gray-700 card-hover" data-aos="fade-right">
+        <h3 class="text-2xl font-semibold text-white mb-8 text-center">Get in Touch</h3>
+        
+        <!-- Contact Icons Grid -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <!-- Email -->
+          <div class="text-center group cursor-pointer" onclick="window.location.href='mailto:ae0891821@gmail.com'">
+            <div class="bg-cyan-500/10 p-6 rounded-2xl border border-cyan-400/30 hover:bg-cyan-500/20 transition-all duration-300 group-hover:scale-105">
+              <i class="fas fa-envelope text-4xl text-cyan-400 mb-3"></i>
+              <p class="text-white font-medium text-sm">Email</p>
+            </div>
+          </div>
+          
+          <!-- WhatsApp -->
+          <div class="text-center group cursor-pointer" onclick="window.open('https://wa.me/201004542726', '_blank')">
+            <div class="bg-cyan-500/10 p-6 rounded-2xl border border-cyan-400/30 hover:bg-cyan-500/20 transition-all duration-300 group-hover:scale-105">
+              <i class="fab fa-whatsapp text-4xl text-cyan-400 mb-3"></i>
+              <p class="text-white font-medium text-sm">WhatsApp</p>
+            </div>
+          </div>
+          
+          <!-- GitHub -->
+          <div class="text-center group cursor-pointer" onclick="window.open('https://github.com/Ahmed-Elsahmy', '_blank')">
+            <div class="bg-cyan-500/10 p-6 rounded-2xl border border-cyan-400/30 hover:bg-cyan-500/20 transition-all duration-300 group-hover:scale-105">
+              <i class="fab fa-github text-4xl text-cyan-400 mb-3"></i>
+              <p class="text-white font-medium text-sm">GitHub</p>
+            </div>
+          </div>
+          
+          <!-- LinkedIn -->
+          <div class="text-center group cursor-pointer" onclick="window.open('https://www.linkedin.com/in/ahmed-elshamy-6b2785289', '_blank')">
+            <div class="bg-cyan-500/10 p-6 rounded-2xl border border-cyan-400/30 hover:bg-cyan-500/20 transition-all duration-300 group-hover:scale-105">
+              <i class="fab fa-linkedin text-4xl text-cyan-400 mb-3"></i>
+              <p class="text-white font-medium text-sm">LinkedIn</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Location -->
+        <div class="text-center mb-6">
+          <div class="bg-cyan-500/10 p-4 rounded-xl border border-cyan-400/30 inline-block">
+            <i class="fas fa-map-marker-alt text-2xl text-cyan-400 mr-2 rtl:mr-0 rtl:ml-2"></i>
+            <span class="text-white font-medium">Damietta, Egypt</span>
+          </div>
+        </div>
+        
       </div>
-      <form action="#" method="POST" class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 card-hover" data-aos="fade-left">
-        <div class="mb-4"><input type="text" placeholder="Your Name" class="w-full p-3 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:border-cyan-400"/></div>
-        <div class="mb-4"><input type="email" placeholder="Your Email" class="w-full p-3 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:border-cyan-400"/></div>
-        <div class="mb-4"><textarea placeholder="Your Message" rows="4" class="w-full p-3 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:border-cyan-400"></textarea></div>
-        <button type="submit" class="w-full bg-cyan-500 text-black font-semibold py-3 rounded hover:bg-cyan-400 transition">Send Message</button>
+      <form id="contact-form" class="bg-gray-900/50 backdrop-blur-sm p-8 rounded-xl border border-gray-700 card-hover" data-aos="fade-left">
+        <h3 class="text-2xl font-semibold text-white mb-6 text-center">Send Message</h3>
+        
+        <div class="space-y-6">
+          <!-- Name Field -->
+          <div class="group">
+            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Name</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              placeholder="Your Full Name" 
+              required
+              class="w-full p-4 rounded-lg bg-gray-800/50 text-white border border-gray-600 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 group-hover:border-cyan-400/50"
+            />
+          </div>
+          
+          <!-- Email Field -->
+          <div class="group">
+            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="your.email@example.com" 
+              required
+              class="w-full p-4 rounded-lg bg-gray-800/50 text-white border border-gray-600 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 group-hover:border-cyan-400/50"
+            />
+          </div>
+          
+          <!-- Subject Field -->
+          <div class="group">
+            <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+            <input 
+              type="text" 
+              id="subject" 
+              name="subject" 
+              placeholder="What's this about?" 
+              required
+              class="w-full p-4 rounded-lg bg-gray-800/50 text-white border border-gray-600 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 group-hover:border-cyan-400/50"
+            />
+          </div>
+          
+          <!-- Message Field -->
+          <div class="group">
+            <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+            <textarea 
+              id="message" 
+              name="message" 
+              placeholder="Tell me about your project or question..." 
+              rows="5" 
+              required
+              class="w-full p-4 rounded-lg bg-gray-800/50 text-white border border-gray-600 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 group-hover:border-cyan-400/50 resize-none"
+            ></textarea>
+          </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          id="submit-btn"
+          class="w-full mt-8 bg-gradient-to-r from-cyan-500 to-blue-500 text-black font-semibold py-4 px-6 rounded-lg hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <span id="btn-text">Send Message</span>
+          <i id="btn-icon" class="fas fa-paper-plane ml-2"></i>
+        </button>
+        
+        <!-- Success Message -->
+        <div id="success-message" class="hidden mt-4 p-4 bg-green-500/20 border border-green-500/30 rounded-lg text-green-400 text-center">
+          <i class="fas fa-check-circle mr-2"></i>
+          Message sent successfully! I'll get back to you soon.
+        </div>
+        
+        <!-- Error Message -->
+        <div id="error-message" class="hidden mt-4 p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-center">
+          <i class="fas fa-exclamation-circle mr-2"></i>
+          <span id="error-text">Something went wrong. Please try again.</span>
+        </div>
       </form>
     </div>
   </section>
+  </main>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="fixed bottom-8 right-8 bg-cyan-500 text-black p-3 rounded-full shadow-lg hover:bg-cyan-400 transition-all duration-300 opacity-0 invisible z-50" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 
   <!-- Footer -->
   <footer id="footer" class="text-center py-6 text-gray-500"></footer>
 
   <!-- Scripts -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 800, once: true });
-    // All other scripts (Matrix, Typing Effect, Footer Year) remain the same
-    const canvas = document.getElementById("matrix"); const ctx = canvas.getContext("2d"); canvas.height = window.innerHeight; canvas.width = window.innerWidth; const letters = "01"; const fontSize = 16; const columns = canvas.width / fontSize; const drops = Array(Math.floor(columns)).fill(1); function draw() { ctx.fillStyle = "rgba(0,0,0,0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "#00FFFF"; ctx.font = fontSize + "px monospace"; for (let i = 0; i < drops.length; i++) { const text = letters[Math.floor(Math.random() * letters.length)]; ctx.fillText(text, i * fontSize, drops[i] * fontSize); if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) { drops[i] = 0; } drops[i]++; } } const matrixInterval = setInterval(draw, 35); window.addEventListener('resize', () => { canvas.height = window.innerHeight; canvas.width = window.innerWidth; }); const roles = [".NET Developer", "Web Developer", "Problem Solver"]; let roleIndex = 0; let charIndex = 0; let isDeleting = false; function typeEffect() { const currentRole = roles[roleIndex]; let displayText = currentRole.substring(0, charIndex); document.getElementById("typing").textContent = displayText; if (!isDeleting && charIndex < currentRole.length) { charIndex++; setTimeout(typeEffect, 120); } else if (isDeleting && charIndex > 0) { charIndex--; setTimeout(typeEffect, 60); } else { isDeleting = !isDeleting; if (!isDeleting) { roleIndex = (roleIndex + 1) % roles.length; } setTimeout(typeEffect, 1000); } } typeEffect(); document.getElementById("footer").innerHTML = `&copy; ${new Date().getFullYear()} Ahmed Elshamy. All rights reserved.`;
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
